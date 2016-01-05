@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+    <action>
+        <actionName>CUSTOM-spring-boot:run</actionName>
+        <displayName>spring-boot:run</displayName>
+        <goals>
+            <goal>spring-boot:run</goal>
+        </goals>
+        <properties>
+            <Env.MAVEN_OPTS>-Xms128m -Xmx1024m -XX:PermSize=32m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8 -Djava.net.useSystemProxies=true -javaagent:${Env.USERPROFILE}\.m2\repository\org\springframework\springloaded\1.2.4.RELEASE\springloaded-1.2.4.RELEASE.jar -noverify</Env.MAVEN_OPTS>
+        </properties>
+    </action>
+    <action>
+        <actionName>CUSTOM-spring-boot:run(debug)</actionName>
+        <displayName>spring-boot:run(debug)</displayName>
+        <goals>
+            <goal>spring-boot:run</goal>
+        </goals>
+        <properties>
+            <jpda.listen>maven</jpda.listen>
+            <Env.MAVEN_OPTS>-Xms128m -Xmx1024m -XX:PermSize=32m -XX:MaxPermSize=256m -Dfile.encoding=UTF-8 -Djava.net.useSystemProxies=true -javaagent:${Env.USERPROFILE}\.m2\repository\org\springframework\springloaded\1.2.4.RELEASE\springloaded-1.2.4.RELEASE.jar -noverify</Env.MAVEN_OPTS>
+        </properties>
+    </action>
+</actions>

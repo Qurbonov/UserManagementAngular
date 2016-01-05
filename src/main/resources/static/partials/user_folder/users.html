@@ -1,0 +1,28 @@
+<div class="container">
+    <table border="1" class="table table-bordered table-hover">
+        <tr>
+            <td colspan="6">
+                <a ui-sref="addUser" class="btn btn-success btn-xs pull-right">Добавить</a>
+            </td>
+        </tr>
+        <tr>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отдел</th>
+            <th>Модул</th>
+            <th>Изменит</th>
+        </tr>
+        <tr ng-repeat="x in names">
+            <td>{{x.username}}</td>
+            <td>{{x.firstname}}</td>
+            <td>{{x.lastname}}</td>
+            <td>{{x.department[0].departmentName}}</td>
+            <td>{{x.modules[0].moduleName}}</td>
+            <td>
+                <a href="#/users/{{x.id}}" class="btn btn-warning btn-xs">Изменит</a>
+                <a ng-click="removeUser($index)"  class="btn btn-danger btn-xs ">Удалить</a>
+            </td>
+        </tr>
+    </table>
+</div>

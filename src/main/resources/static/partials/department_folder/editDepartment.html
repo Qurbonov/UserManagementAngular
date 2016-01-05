@@ -1,0 +1,22 @@
+<div class="container" ng-controller="editDepController">
+    <div class="panel panel-danger">
+        <div class="panel panel-heading">Изменение данные отдела</div>
+        <div class="panel panel-body">
+            <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
+            <form ng-submit="editDepartment()">
+                <div class="form-group">
+                    <!--<label for="departmentLabel">Отдел</label>-->
+                    <!--<select ng-model="department.parent.departmentName" ng-options="x.departmentName for x in department" class="form-control txtRadius" id="departmentLabel">
+                                        </select>-->
+                    <input type="text" ng-model="department.parent.departmentName" class="form-control txtRadius"/>
+                    <input type="text" ng-model="department.departmentName" class="form-control txtRadius"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary pull-right"> 
+                    <span class="fa fa-user-plus"></span> 
+                    Изменить
+                </button>
+            </form>
+        </div>
+    </div>
+</div> 
