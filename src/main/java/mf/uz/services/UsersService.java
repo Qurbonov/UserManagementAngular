@@ -5,6 +5,7 @@ import mf.uz.domain.Users;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Created by qurbonov on 9/22/2015.
@@ -23,4 +24,6 @@ public interface UsersService {
     void delete(Long userID);
 
     Users findUsers(Credentials credentials);
+
+    public UserDetails findUserInfoByUsername(String username);
 }

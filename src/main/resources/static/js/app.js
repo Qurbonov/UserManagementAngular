@@ -1,58 +1,83 @@
-angular.module('UmApp', ['ui.router', 'ui-notification'])
+angular.module('UmApp', ['ngResource', 'ui.router'])
         .controller('notificationController', function ($scope, Notification) {
             $scope.success = function () {
                 Notification.success('Success notification');
             };
         })
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider, $urlRouterProvider, $resourceProvider) {
             $urlRouterProvider.otherwise('/');
             $stateProvider
-                    .state('home', {
+                    .state('login', {
                         url: '/',
+                        templateUrl: 'partials/login/login.html',
+                        controller: 'loginCtrl'
+                    })
+                    .state('home', {
+                        url: '/home',
                         templateUrl: 'partials/home.html',
                         controller: 'homeCtrl'
                     })
 //User Route
-                    .state('users', {
+                    .state('home.users', {
                         url: '/users',
-                        templateUrl: 'partials/user_folder/users.html',
+                        templateUrl: 'partials/user/users.html',
                         controller: 'usersController'
                     })
-                    .state('addUser', {
-                        url: '/users/addUser',
-                        templateUrl: 'partials/user_folder/addUser.html',
-                        controller: 'addUserCtrl'
-                    })
-                    .state('editUser', {
-                        url: '/users/{id:[0-9]*}',
-                        templateUrl: 'partials/user_folder/editUser.html'
+                    .state('home.editUser', {
+                        url: '/users/:id',
+                        templateUrl: 'partials/user/editUser.html'
                     })
 //Department Route 
-                    .state('departments', {
+                    .state('home.departments', {
                         url: '/departments',
-                        templateUrl: 'partials/department_folder/departments.html',
-                        controller: 'departmentsController'
+                        templateUrl: 'partials/department/departments.html',
+                        controller: 'GetAllDepartmentCtrl'
                     })
-                    .state('addDepartment', {
-                        url: '/departments/new',
-                        templateUrl: 'partials/department_folder/addDepartment.html',
-                        controller: 'departmentsController'})
-                    .state('editDepartment', {
-                        url: '/departments/{id}',
-                        templateUrl: 'partials/department_folder/editDepartment.html'
+                    .state('home.addDepartment', {
+                        url: '/departments/:id',
+                        templateUrl: 'partials/department/addDepartment.html'
                     })
 //Module Route 
-                    .state('modules', {
+                    .state('home.modules', {
                         url: '/modules',
-                        templateUrl: 'partials/module_folder/modules.html',
-                        controller: 'moduleController'
+                        templateUrl: 'partials/module/modules.html',
+                        controller: 'GetAllModuleCtrl'
                     })
-                    .state('addModule', {
-                        url: '/modules/new',
-                        templateUrl: 'partials/module_folder/addModule.html',
-                        controller: 'moduleController'});
-//                    .state('editDepartment', {
-//                        url: '/departments/{id}',
-//                        templateUrl: 'partials/department_folder/editDepartment.html'
-//                    });
-        });
+                    .state('home.editModule', {
+                        url: '/modules/:id',
+                        templateUrl: 'partials/module/editModule.html'
+
+                    });
+            $urlRouterProvider.otherwise('/');
+
+            $resourceProvider.defaults.actions = {
+                query: {method: 'GET', isArray: true},
+                get: {method: 'GET'},
+                create: {method: 'POST'},
+                update: {
+                    method: 'PUT',
+                    params: {
+                        id: '@id'
+                    }
+                },
+                remove: {method: 'DELETE'}
+            };
+        })
+        .run([
+            '$window', '$http', '$rootScope', '$state',
+            function ($window, $http, $rootScope, $state) {
+                var getAuthorization = function ($window) {
+                    return $window.sessionStorage.getItem('token');
+                };
+
+                $http.defaults.headers.common.Authorization = getAuthorization($window);
+
+                $rootScope.$on('$stateChangeStart', function (event, toState) {
+
+                    if (toState.name !== 'login' && !getAuthorization($window)) {
+                        event.preventDefault();
+                        $state.go('login');
+                    }
+                });
+            }
+        ]);

@@ -1,10 +1,10 @@
-<div class="container" ng-controller="addUserCtrl">
-    <div class="panel panel-danger">
+<div class="container" ng-controller="userEditCtrl">
+    <div class="panel panel-success">
         <div class="panel panel-heading">Добавить пользователя</div>
         <div class="panel panel-body">
             
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
-            <form  ng-submit="sendPost()">
+            <form  ng-submit="editUser()">
                 <div class="form-group">
                     <label for="inputEmail">Имя</label>
                     <input type="text" ng-model="user.firstname" class="form-control txtRadius" placeholder="Имя">

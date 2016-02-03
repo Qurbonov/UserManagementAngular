@@ -1,0 +1,27 @@
+<div class="container">
+<a ui-sref="home.editUser({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px">
+    <i class="fa fa-plus fa-1x"></i> Добавить</a>    
+    <table border="0" class="table table-bordered table-hover">
+        <tr>
+            <th>Логин</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отдел</th>
+            <th>Модул</th>
+             <th class="text-center">Изменение</th>
+        </tr>
+        <tr ng-repeat="x in names">
+            <td>{{x.username}}</td>
+            <td>{{x.firstname}}</td>
+            <td>{{x.lastname}}</td>
+            <td>{{x.department[0].departmentName}}</td>
+            <td>{{x.modules[0].moduleName}}</td>
+           <td class="col-md-3 text-center">
+               <span>
+                   <a ui-sref="home.editUser({id: x.id})" class="btn btn-default btn-sm"><i class="fa fa-pencil-square-o fa-1x"></i></a>
+                   <a ng-click="removeUser($index)" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-1x"></i></a>
+               </span>
+            </td>
+        </tr>
+    </table>
+</div>

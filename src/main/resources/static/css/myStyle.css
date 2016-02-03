@@ -1,3 +1,13 @@
-.txtRadius{
-    border-radius: 5px;
+html { 
+    background: url(../img/10.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+.login{
+    margin-top: 200px;
+}
+.table > tbody > tr > td {
+     vertical-align: middle;
 }

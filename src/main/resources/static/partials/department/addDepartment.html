@@ -1,0 +1,17 @@
+<div class="container" ng-controller="AddEditDepartmentCtrl">
+    <div class="panel panel-success">
+        <div class="panel panel-heading">Добавить отдела</div>
+        <div class="panel panel-body">
+            <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
+            <form  ng-submit="editDepartment()">
+                <div class="form-group">
+                    <label for="selectDept">Отдел</label>
+                    <select ng-model="department.parent" ng-options="x as x.departmentName for x in departments" class="form-control" id="selectDept"></select>
+                    &nbsp;
+                    <input type="text" ng-model="department.departmentName" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right"> <span class="fa fa-user-plus "></span> Добавить</button>
+            </form>
+        </div>
+    </div>
+</div> 

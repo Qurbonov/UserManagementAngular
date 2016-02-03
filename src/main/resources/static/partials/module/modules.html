@@ -1,0 +1,18 @@
+<div class="container">
+    <a ui-sref="home.editModule({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px"><i class="fa fa-plus fa-1x"></i> Добавить</a>
+    <table border="1" class="table table-bordered table-hover">
+        <tr>
+            <th>Название</th>
+            <th>Описания</th>
+            <th class="text-center">Изменение</th>
+        </tr>
+        <tr ng-repeat="module in restModules">
+            <td>{{module.moduleName}}</td>
+            <td>{{module.description}}</td>
+            <td class="col-md-3 text-center">
+                <a ui-sref="home.editModule({id: module.id})" class=" btn btn-default btn-sm" title="Изменить"><i class="fa fa-pencil-square-o fa-1x"></i></a> 
+                <a ng-click="removeModule($index)" class=" btn btn-danger btn-sm"><i class="fa fa-trash-o fa-1x"></i></a>
+            </td>
+        </tr>
+    </table>
+</div>

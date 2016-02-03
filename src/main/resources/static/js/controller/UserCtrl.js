@@ -1,76 +1,32 @@
-angular
-        .module("UmApp")
+angular.module("UmApp").controller('usersController', function ($scope, restUserApiService) {
+    $scope.names = restUserApiService.query();
+    $scope.removeUser = function (index) {
+        restUserApiService.remove({id: $scope.names[index].id}, function () {
+            $scope.names.splice(index, 1);
+        });
+    };
+});
 
-        .controller('usersController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
-                $http.get("http://localhost:8080/api/get/users")
-                        .then(function (response) {
-                            $scope.names = response.data;
-                        });
+angular.module("UmApp").controller("userEditCtrl", function ($scope, $state, $stateParams, restUserApiService, restDepartmentApiService, restModuleApiService, restRoleApiService) {
+    var id = $stateParams.id;
+    if (id === 'new') {
+        $scope.user = new restUserApiService();
+    } else {
+        $scope.user = restUserApiService.get({id: id});
+    }
+    $scope.departments = restDepartmentApiService.query();
+    $scope.modules = restModuleApiService.query();
+    $scope.roles = restRoleApiService.query();
 
-                $scope.removeUser = function (index) {
-                    $http.delete('/api/users/' + $scope.names[index].id)
-                            .success(function (response, status, headers, config) {
-                                console.log($scope.names.length);
-                                console.log(index);
-                                console.log('/api/users/' + $scope.names[index].id);
-                                $scope.names.splice(index, 1);
-                            })
-                            .error(function (response, status, headers, config) {
-                                $scope.error_message = response.error_message;
-                            });
-                };
-                $scope.editUser = function (index) {
-                    $location.path('/users/editUser');
-                    $http.put("http://localhost:8080/api/post/users/" + $scope.names[index].id, $scope.user).success(function (data, status) {
-                        if (status === 200)
-                        {
-                            $scope.messages = [{type: 'success', text: 'Save success'}];
-                            $location.path('/users');
-                        }
-                        if (status === 400)
-                        {
-                            console.log('Something is wrong');
-                        }
-                    });
-                };
+//    $state.go('home.editUser', {id: 100});
 
-            }])
-
-        .controller('addUserCtrl', ['$scope', '$http', '$stateParams', '$location', function ($scope, $http, $stateParams, $location) {
-                var id = $stateParams.id;
-                if (id === 'new') {
-                } else {
-                    $http.get("http://localhost:8080/api/get/users/" + id)
-                            .then(function (response) {
-                                $scope.user = response.data;
-                            });
-                }
-                $scope.sendPost = function () {
-                    $http.post("http://localhost:8080/api/post/users", $scope.user).success(function (data, status) {
-                        if (status === 200)
-                        {
-                            $scope.messages = [{type: 'success', text: 'Save success'}];
-                            $location.path('/users');
-                        }
-                        if (status === 400)
-                        {
-                            console.log('Something is wrong');
-                        }
-                    });
-                };
-
-                $http.get("http://localhost:8080/api/get/departments")
-                        .then(function (response) {
-                            $scope.departments = response.data;
-                        });
-                $http.get("http://localhost:8080/api/get/modules")
-                        .then(function (response) {
-                            $scope.modules = response.data;
-                        });
-                $http.get("http://localhost:8080/api/get/roles")
-                        .then(function (response) {
-                            $scope.roles = response.data;
-                        });
-            }
-        ]);
-      
+    $scope.editUser = function () {
+        if (id === 'new') {
+            $scope.user.$create();
+            $state.go('home.users');
+        } else {
+            $scope.user.$update();
+            $state.go('home.users');
+        }
+    };
+});
