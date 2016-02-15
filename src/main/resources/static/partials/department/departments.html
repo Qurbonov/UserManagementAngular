@@ -1,6 +1,7 @@
 <div class="container">
     <div ng-repeat="message in messages" ng-class="message.type" class="alert alert-danger">{{message.text}}</div>
-    <a ui-sref="home.addDepartment({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px"><i class="fa fa-plus fa-1x"></i> Добавить</a>
+    <a ui-sref="home.addDepartment({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px">
+        <i class="fa fa-plus fa-1x"></i> Добавить</a>
     <table border="1" class="table table-bordered table-hover">
         <tr>
             <th>Название департамента</th>
@@ -8,7 +9,7 @@
             <th class="text-center">Изменение</th>
         </tr>
         <tr ng-repeat="department in departments">
-            <td class="col-md-2">{{department.parent.departmentName}}</td>
+            <td class="col-md-3">{{department.parent.departmentName}}</td>
             <td>{{department.departmentName}}</td>
             <td class="col-md-3 text-center">
                 <a ui-sref="home.addDepartment({id: department.id})" class=" btn btn-default btn-sm"><i class="fa fa-pencil-square-o fa-1x"></i></a>  

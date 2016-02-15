@@ -21,6 +21,11 @@ import mf.uz.services.RoleService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import mf.uz.domain.*;
+import mf.uz.services.*;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by qurbonov on 10/9/2015.
@@ -36,13 +41,15 @@ public class RestApi {
     ModuleService moduleService;
     @Autowired
     RoleService roleService;
-    
+    @Autowired
+    TokenService tokenService;
+
     @RequestMapping("/api/auth")
     public Object auth(Principal principal) {
         Map<String, Object> result = new TreeMap<>();
-            result.put("username", principal);
-        return result; 
-    } 
+        result.put("username", principal);
+        return result;
+    }
 
 //  Find all users
     @RequestMapping(value = "/api/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,21 +58,25 @@ public class RestApi {
         return new ResponseEntity<>(userses, HttpStatus.OK);
     }
 //  Find one user
+
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Users> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(usersService.findOne(id), HttpStatus.OK);
     }
 //  Save user
+
     @RequestMapping(value = "/api/users", method = RequestMethod.POST)
     public Users setUsers(@RequestBody Users users) {
         return usersService.save(users);
     }
 //  Edit user
+
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.PUT)
     public Users editUsers(@RequestBody Users users) {
         return usersService.save(users);
     }
 //  Delete user
+
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteUser(@PathVariable(value = "id") String id) {
@@ -76,14 +87,19 @@ public class RestApi {
 //  Find all departments
     @RequestMapping(value = "/api/departments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Department>> getDepartments() {
-        Collection<Department> departments = departmentService.findAll();
+        Collection<Department> departments = departmentService.findByParentId(null);
         return new ResponseEntity<>(departments, HttpStatus.OK);
-    }   
-            
+    }
+    @RequestMapping(value = "/api/allDepartments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Department>> getAllDepartments() {
+        Collection<Department> departments = departmentService.findAll(); 
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
 //  Find one department
     @RequestMapping(value = "/api/departments/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Department> getDepartment(@PathVariable Long id) {
-        return new ResponseEntity<>(departmentService.findOne(id), HttpStatus.OK); 
+        return new ResponseEntity<>(departmentService.findOne(id), HttpStatus.OK);
     }
 
 //  Save department
@@ -92,11 +108,13 @@ public class RestApi {
         return departmentService.save(department);
     }
 //  Edit department
+
     @RequestMapping(value = "/api/departments/{id}", method = RequestMethod.PUT)
     public Department editDepartment(@RequestBody Department department) {
         return departmentService.save(department);
     }
 //  Remove department
+
     @RequestMapping(value = "/api/departments/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteDepartments(@PathVariable(value = "id") String id) {
@@ -104,40 +122,64 @@ public class RestApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/api/departments/{id}/children", method = RequestMethod.GET)
+    @ResponseBody
+    public Object getChildren(@PathVariable Long id) {
+        Collection<Department> departments = departmentService.findByParentId(id);
+        return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
 //  Find all modules
     @RequestMapping(value = "/api/modules", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Module>> getModules() {
         Collection<Module> modules = moduleService.findAll();
         return new ResponseEntity<>(modules, HttpStatus.OK);
-    } 
+    }
 //  Find one module
+
     @RequestMapping(value = "/api/modules/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Module> getModule(@PathVariable Long id) {
         return new ResponseEntity<>(moduleService.findOne(id), HttpStatus.OK);
     }
 //  Save module
+
     @RequestMapping(value = "/api/modules", method = RequestMethod.POST)
     public Module setModule(@RequestBody Module module) {
         return moduleService.save(module);
     }
 //  Edit module
+
     @RequestMapping(value = "/api/modules/{id}", method = RequestMethod.PUT)
     public Module editModule(@RequestBody Module module) {
         return moduleService.save(module);
     }
 //  Delete module
+
     @RequestMapping(value = "/api/modules/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public Object deleteModule(@PathVariable(value = "id") String id) {
         moduleService.delete(Long.parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
-   
+
 //    Role JSON
     @RequestMapping(value = "/api/roles", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Role>> getRoles() {
         Collection<Role> roles = roleService.findAll();
         return new ResponseEntity<>(roles, HttpStatus.OK);
+    }
+//    Generate UUID
+
+    @RequestMapping(value = "/api/uuid", method = RequestMethod.POST)
+    public ResponseEntity<Token> SetUUID(HttpServletRequest request) {
+        return new ResponseEntity<>(tokenService.generate(request.getRemoteAddr()), HttpStatus.OK);
+    }
+
+//    Get UUID
+    @RequestMapping(value = "/api/uuid", method = RequestMethod.GET)
+    public ResponseEntity<Collection<Token>> GetUUID() {
+        Collection<Token> token = tokenService.findAll();
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
 }

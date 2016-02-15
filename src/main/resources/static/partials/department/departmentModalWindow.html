@@ -1,0 +1,18 @@
+<div class="col-xs-6 pull-right">
+    <div class="panel panel-success">
+        <div class="panel panel-heading"> {{ department.id ? 'Изменить отдела' : 'Добавить отдела' }}</div>
+        <div class="panel panel-body">
+            <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
+            <form  ng-submit="editDepartment()">
+                <div class="form-group">
+                    <label for="selectDept">Отдел</label>
+                    <select ng-model="department.parent" ng-options="x as x.departmentName for x in departments" class="form-control" id="selectDept"></select>
+                    &nbsp;
+                    <input type="text" ng-model="department.departmentName" class="form-control"/>
+                </div>
+                <button class="btn btn-warning" type="button" ng-click="cancel()">Отмена ss</button>
+                <form-element entity="department"></form-element>
+            </form>
+        </div>
+    </div>
+</div>

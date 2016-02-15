@@ -1,8 +1,16 @@
 {
-    "elements": {},
+    "elements": {
+        "form-element": {},
+        "treecontrol": {}
+    },
     "attributes": {
+        "tree-model": {},
+        "on-selection": {},
         "aria-expanded": {},
         "ui-view": {},
+        "treecontrol": {},
+        "class": {},
+        "entity": {},
         "ui-sref": {}
     }
 }

@@ -1,4 +1,4 @@
-angular.module('UmApp', ['ngResource', 'ui.router'])
+angular.module('UmApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap'])
         .controller('notificationController', function ($scope, Notification) {
             $scope.success = function () {
                 Notification.success('Success notification');
@@ -36,6 +36,10 @@ angular.module('UmApp', ['ngResource', 'ui.router'])
                     .state('home.addDepartment', {
                         url: '/departments/:id',
                         templateUrl: 'partials/department/addDepartment.html'
+                    })
+                    .state('home.departmentModalWindow', {
+                        url: '/departmentmodalWindow',
+                        templateUrl: 'partials/department/departmentModalWindow.html'
                     })
 //Module Route 
                     .state('home.modules', {

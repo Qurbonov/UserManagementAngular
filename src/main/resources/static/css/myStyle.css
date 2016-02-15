@@ -11,3 +11,18 @@ html {
 .table > tbody > tr > td {
      vertical-align: middle;
 }
+.addDeptDiv{
+    background-color: #dee3e5;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    padding: 5px 0 5px 0;
+}
+.addDeptLink{
+    position: relative;
+    right: 10px;
+}
+.treeCtrl{
+    position: absolute;
+    top: 100px;
+}

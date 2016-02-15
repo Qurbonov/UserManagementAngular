@@ -2,16 +2,21 @@
 angular
         .module("UmApp")
         .controller('loginCtrl', function ($scope, $http, $window, $location, loginService) {
+            $scope.load = function () {
+                $http.post('/api/uuid')
+                        .success(function (response) {
+                            console.log("saved");
+                        }).error(function (responce) {
+                    $scope.error = "Please check your login and password ";
+                    console.log(response);
+                });
+                $http.get('api/uuid').success(function (response) {
+                     console.log("get" + response);
+                }).error(function (response) {
+                    console.log("error" + response);
+                })
+            }
             $scope.login = function (user) {
-                 console.log("response");
-                 var eSigner = getESigner();
-                            if (!eSigner.signDigest) {
-                                event.preventDefault();
-                                alert('Sorry, esigner is not installed.');
-                            }
-                
-                
-                
                 var token = 'Basic ' + btoa(user.login + ':' + user.password);
                 $http.defaults.headers.common.Authorization = token;
                 $http.get('api/auth').success(function (response) {
@@ -22,7 +27,7 @@ angular
                     console.log(response);
                 });
             };
-          
+
         }
         );
         

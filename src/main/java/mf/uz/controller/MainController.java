@@ -14,9 +14,4 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class MainController {
-
-    @RequestMapping(value = "/api")
-    public String index1() {
-        return "";
-    }
 }

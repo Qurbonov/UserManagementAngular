@@ -1,8 +1,8 @@
 <div class="container" ng-controller="userEditCtrl">
     <div class="panel panel-success">
-        <div class="panel panel-heading">Добавить пользователя</div>
+        <div class="panel panel-heading"> {{ user.id ? 'Изменить пользователя' : 'Добавить пользователя' }} </div>
         <div class="panel panel-body">
-            
+
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
             <form  ng-submit="editUser()">
                 <div class="form-group">
@@ -27,8 +27,7 @@
                     <label for="inputEmail">Тип</label>
                     <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
                 </div>
-
-                <button type="submit" class="btn btn-primary pull-right"> <span class="fa fa-user-plus "></span> Изменить</button>
+                <form-element entity="user"></form-element>
             </form>
         </div>
     </div>

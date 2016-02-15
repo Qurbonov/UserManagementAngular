@@ -1,45 +1,15 @@
-<div class="container login">
-    <form role="form" name="loginForm" id="login" action="#/">
+<div class="container login" ng-init="load()">
+    <form role="form" name="loginForm">
         <div class="form-signin">
-            <h2 class="form-signin-heading">Welcome: {{user.login}}</h2>
+            <h2 class="form-signin-heading">Добро пожаловать {{user.login}}</h2>
             <div class="text-danger">{{error}}</div>
-            <label for="loginTxt">Login :</label>
-            <input type="text" id="username" placeholder="Enter login" class="form-control" required ng-model="user.login" />
+            <label for="loginTxt">Логин :</label>
+            <input type="text" id="username" class="form-control" required ng-model="user.login" />
         </div>
         <div class="form-group">
-            <label for="loginPasswd">Password:</label>
-            <input type="password" id="password" placeholder="Enter password" class="form-control" required ng-model="user.password" />
+            <label for="loginPasswd">Пароль:</label>
+            <input type="password" id="password" class="form-control" required ng-model="user.password" />
         </div>
-        <button class="btn btn-info" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Sign in</button>
+        <button class="btn btn-info pull-right" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Вход</button>
     </form>
 </div>
-<script>
-
-
-//            $(document).ready(function () {
-//                $('#login').on('submit', function (event) {
-//                    var eSigner = getESigner();
-//                    if (!eSigner.signDigest) {
-//                        event.preventDefault();
-//                        alert('Sorry, esigner is not installed.');
-//                    }
-//                });
-//            });
-//            $(function () {
-//                $('#login').on('submit', function (e) {
-//                    var sessionId = $('#sessionId').val();
-//                    var username = $('#username').val();
-//                    var password = $('#password').val();
-//                    var text = username + password;
-//                    var hash = eSignerDigest(text);
-//                    var signature = eSignerSign(E_SIGNER_KEY_SOURCE.AUTO, sessionId, hash);
-//                    if (eSignerFailed()) {
-//                        console.log("error");
-//                    }
-//                    $('#hash').val(hash);
-//                    $('#signature').val(signature);
-//                    console.log('trying to submit', sessionId, username, password, hash, signature);
-//                });
-//            });
-
-</script>
