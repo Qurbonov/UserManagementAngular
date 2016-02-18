@@ -34,6 +34,7 @@ treecontrol li.tree-leaf i.tree-leaf-head {display:inline;}
 
 treecontrol li i.tree-branch-head {
     cursor: pointer;
+    
 }
 
 treecontrol li .tree-label {
@@ -63,6 +64,9 @@ treecontrol.tree-light li.tree-leaf i.tree-leaf-head {
 
 treecontrol.tree-light li .tree-selected {
     font-weight: bold;
+    background-color: #f0f2f2;
+    padding:0 5px 0 5px;
+    border-radius: 0 5px 0 5px;
 }
 
 treecontrol.tree-light li .tree-unselectable {

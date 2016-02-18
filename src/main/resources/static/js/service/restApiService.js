@@ -1,6 +1,6 @@
 'use strict';
 angular
-        .module("UmApp")
+        .module("umApp")
         .factory('restUserApiService', function ($resource) {
             return $resource('api/users/:id', {id: '@id'});
         })

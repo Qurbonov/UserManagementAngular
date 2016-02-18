@@ -2,13 +2,22 @@
     <div class="addDeptDiv">
         <a ng-click="open()" class="pull-right addDeptLink">Добавить отдела</a> 
     </div>
-    <div class="container">
-        <div class="col-lg-6 treeCtrl">
-            <treecontrol class="tree-light" tree-model="departments" options="departmentTreeOptions" 
-                         expanded-nodes="expandedDepartments" on-selection="showSelected(node)">
-                {{node.departmentName}}  
-                <a ng-click="editDept(node)" class="pull-right addDeptLink">edit</a> 
-            </treecontrol>
+    <div class="container treeCtrl">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">&nbsp;</div>
+            <div class="panel panel-body">
+
+                <div>
+                    <treecontrol class="tree-light" tree-model="departments" options="departmentTreeOptions" 
+                                 expanded-nodes="expandedDepartments" on-selection="showSelected(node)">
+                        {{node.departmentName}}
+
+
+                        <!--<input type="checkbox" class="pull-right" uib-popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}">--> 
+
+                    </treecontrol>
+                </div>
+            </div>
         </div>
-    </div>
-</div>  
+        <!--<tree-grid expand-level="2" expand-on="expanding_property" tree-control="my_tree" tree-data="tree_data" on-select="showSelected(branch)" col-defs="col_defs"></tree-grid>-->
+

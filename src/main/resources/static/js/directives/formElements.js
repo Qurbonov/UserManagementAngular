@@ -1,4 +1,4 @@
-angular.module("UmApp")
+angular.module("umApp")
         .directive("editRemoveButton", function () {
             return {
                 template: '<a ui-sref="home.addDepartment({id: department.id})" class="btn btn-default btn-sm"><i class="fa fa-pencil-square-o fa-1x"></i></a>\n\

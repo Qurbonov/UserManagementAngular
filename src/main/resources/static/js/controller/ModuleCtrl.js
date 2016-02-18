@@ -1,4 +1,4 @@
-angular.module("UmApp").controller('GetAllModuleCtrl', function ($scope, restModuleApiService) {
+angular.module("umApp").controller('GetAllModuleCtrl', function ($scope, restModuleApiService) {
     $scope.restModules = restModuleApiService.query();
     $scope.removeModule = function (index) {
         restModuleApiService.remove({id: $scope.restModules[index].id}, function () {
@@ -7,7 +7,7 @@ angular.module("UmApp").controller('GetAllModuleCtrl', function ($scope, restMod
     };
 });
 
-angular.module("UmApp").controller("AddEditModuleCtrl", function ($scope, $state, $stateParams, restModuleApiService) {
+angular.module("umApp").controller("AddEditModuleCtrl", function ($scope, $state, $stateParams, restModuleApiService) {
     var id = $stateParams.id;
     if (id === 'new') {
         $scope.module = new restModuleApiService();

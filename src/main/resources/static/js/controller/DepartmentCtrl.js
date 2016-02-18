@@ -1,4 +1,4 @@
-angular.module("UmApp").controller('GetAllDepartmentCtrl', function ($scope, restAllDepartmentApiService, restDepartmentApiService) {
+angular.module("umApp").controller('GetAllDepartmentCtrl', function ($scope, restAllDepartmentApiService, restDepartmentApiService) {
     $scope.departments = restAllDepartmentApiService.query();
     $scope.removeDepartment = function (index) {
         restDepartmentApiService.remove({id: $scope.departments[index].id}, function () {
@@ -8,7 +8,7 @@ angular.module("UmApp").controller('GetAllDepartmentCtrl', function ($scope, res
     };
 });
 
-angular.module("UmApp").controller("AddEditDepartmentCtrl",
+angular.module("umApp").controller("AddEditDepartmentCtrl",
         function ($scope, restAllDepartmentApiService, $uibModalInstance, $state, $stateParams, restDepartmentApiService, departmentId) {
 //            $uibModalInstance.close(departmentId);
             var id = departmentId;

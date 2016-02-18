@@ -1,6 +1,8 @@
 {
     "elements": {
         "form-element": {},
+        "tree-grid": {},
+        "tree-dnd": {},
         "treecontrol": {}
     },
     "attributes": {

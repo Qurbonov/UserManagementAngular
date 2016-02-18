@@ -1,19 +1,19 @@
 'use strick';
 angular
-        .module("UmApp")
+        .module("umApp")
         .controller('loginCtrl', function ($scope, $http, $window, $location, loginService) {
             $scope.load = function () {
                 $http.post('/api/uuid')
                         .success(function (response) {
-                            console.log("saved");
+//                            console.log("saved");
                         }).error(function (responce) {
                     $scope.error = "Please check your login and password ";
-                    console.log(response);
+//                    console.log(response);
                 });
                 $http.get('api/uuid').success(function (response) {
                      console.log("get" + response);
                 }).error(function (response) {
-                    console.log("error" + response);
+//                    console.log("error" + response);
                 })
             }
             $scope.login = function (user) {

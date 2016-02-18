@@ -1,4 +1,4 @@
-angular.module('UmApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap'])
+angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap','ntt.TreeDnD','treeGrid'])
         .controller('notificationController', function ($scope, Notification) {
             $scope.success = function () {
                 Notification.success('Success notification');

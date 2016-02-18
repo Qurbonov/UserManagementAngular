@@ -1,4 +1,4 @@
-angular.module("UmApp").controller('usersController', function ($scope, restUserApiService) {
+angular.module("umApp").controller('usersController', function ($scope, restUserApiService) {
     $scope.names = restUserApiService.query();
     $scope.removeUser = function (index) {
         restUserApiService.remove({id: $scope.names[index].id}, function () {
@@ -7,7 +7,7 @@ angular.module("UmApp").controller('usersController', function ($scope, restUser
     };
 });
 
-angular.module("UmApp").controller("userEditCtrl", function ($scope, $state, $stateParams, restUserApiService, restDepartmentApiService, restModuleApiService, restRoleApiService) {
+angular.module("umApp").controller("userEditCtrl", function ($scope, $state, $stateParams, restUserApiService, restDepartmentApiService, restModuleApiService, restRoleApiService) {
     var id = $stateParams.id;
     if (id === 'new') {
         $scope.user = new restUserApiService();
