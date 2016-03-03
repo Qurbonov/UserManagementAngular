@@ -18,6 +18,16 @@ html {
     top: 60px;
     padding: 5px 0 5px 0;
 }
+.addDeptLink{
+    padding-bottom: 20px;
+    cursor: pointer;
+}
+.addDeptLink:hover{
+    padding-bottom: 20px;
+    cursor: pointer;
+    color: #0a4b3e;
+    text-decoration: none;
+}
 .editLink{
     position: relative;
     right: 20px;

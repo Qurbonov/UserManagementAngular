@@ -1,68 +1,25 @@
 angular.module("umApp")
-        .controller('treeCtrl', function ($scope, $uibModal, restDepartmentApiService, $log) {
-            $scope.dynamicPopover = {
-                templateUrl: 'myPopoverTemplate.html'
-            };
-            $scope.items = [
-                'Add',
-                'Edit',
-                'Delete'
-            ];
-            $scope.toggled = function (open) {
-                $log.log('Dropdown is now: ', open);
-            };
-            
-            
-            
-            
-////            var tree;
-//            $scope.tree_data = {};
-//            $scope.my_tree = tree = {};
-//            $scope.my_tree_handler = function (branch) {
-//                console.log('you clicked on', branch)
-//            }
-//            restDepartmentApiService.query(function (response) {
-//                $scope.tree_data = response;
-//            });
-//
-//            $scope.my_tree.addFunction = function (node) {
-//                console.log(node);
-//                alert('Function added in Controller "App.js"');
-//            };
-//
-//            $scope.col_defs = [
-//                {
-//                    cellTemplate: '<button ng-click="tree.addFunction(node)" class="btn btn-default btn-sm">Added Controller!</button>'
-//                },
-//                {
-//                    cellClass: 'v-middle text-center',
-//                    cellTemplate: '<button ng-click="tree.remove_node(node)" class="btn btn-warning btn-sm">Edit</button>'
-//                },
-//                {
-//                    cellTemplate: '<button ng-click="tree.remove_node(node)" class="btn btn-danger btn-sm">Remove</button>'
-//                }
-//            ];
-//            $scope.expanding_property = {
-//                field: "departmentName",
-//                titleClass: 'text-center',
-//                cellClass: 'v-middle',
-//                displayName: 'Название'
-//            };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        .directive('customPopover', function () {
+            return {
+                restrict: 'A',
+                scope: {
+                    departmentId: '@',
+                    onRemove: '&',
+                    onEdit: '&'
+                },
+                template: '<a ng-click="openModalWindow(departmentId)"><i class="fa fa-pencil-square-o fa-1x"></i></a>&nbsp \n\
+<a ng-click="remove(departmentId)"><i class="fa fa-trash-o fa-1x"></i></a>',
+                controller: function ($scope) {
+                    $scope.remove = function (departmentId) {
+                        $scope.onRemove();
+                    };
+                    $scope.openModalWindow = function (departmentId) {
+                        $scope.onEdit();
+                    }
+                }
+            }
+        })
+        .controller('treeCtrl', function ($scope, $uibModal, restDepartmentApiService) {
             $scope.departments = restDepartmentApiService.query();
             $scope.departmentTreeOptions = {
                 isLeaf: function (department) {
@@ -70,6 +27,35 @@ angular.module("umApp")
                 }
             };
             $scope.expandedDepartments = [];
+
+            $scope.removeDepartment = function (department) {
+                restDepartmentApiService.remove({id: department.id});
+                
+                function findRecursive(list, id) {
+                    for (var i = 0; i < list.length; i++) {
+                        var item = list[i];
+                        if (item.id === id) {
+                            return item;
+                        }
+                        if (item.children) {
+                            return findRecursive(item.children, id);
+                        }
+                    }
+                    return null;
+                }
+
+                function removeItem(array, item) {
+                    return array.splice(array.indexOf(item), 1);
+                }
+
+                var parent = department.parent;
+                if (parent) {
+                    var parent1 = findRecursive($scope.departments, parent.id);
+                    parent1.children = parent1.children.filter(function (item) {
+                        return item.id !== department.id;
+                    });
+                }
+            };
             $scope.showSelected = function (department) {
                 if (department.hasChildren && !department.loaded) {
                     department.loaded = true;
@@ -88,7 +74,6 @@ angular.module("umApp")
                         departmentId: 0
                     }
                 });
-                console.log("new");
             };
             $scope.editDept = function (department) {
                 //console.log(department);
@@ -101,6 +86,5 @@ angular.module("umApp")
                         departmentId: department.id
                     }
                 });
-            }
-            ;
+            };
         });

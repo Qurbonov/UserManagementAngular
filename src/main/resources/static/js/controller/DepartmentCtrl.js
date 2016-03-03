@@ -2,7 +2,6 @@ angular.module("umApp").controller('GetAllDepartmentCtrl', function ($scope, res
     $scope.departments = restAllDepartmentApiService.query();
     $scope.removeDepartment = function (index) {
         restDepartmentApiService.remove({id: $scope.departments[index].id}, function () {
-        
             $scope.departments.splice(index, 1);
         });
     };
@@ -22,12 +21,9 @@ angular.module("umApp").controller("AddEditDepartmentCtrl",
             $scope.editDepartment = function () {
                 if (id === 0) {
                     $scope.department.$create();
-                    debugger;
-                    $state.go('home.departments');
                     $uibModalInstance.dismiss('cancel');
                 } else {
                     $scope.department.$update();
-                    $state.go('home.departments');
                     $uibModalInstance.dismiss('cancel');
                 }
             };

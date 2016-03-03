@@ -1,4 +1,4 @@
-angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap','ntt.TreeDnD','treeGrid'])
+angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap', 'ntt.TreeDnD', 'treeGrid'])
         .controller('notificationController', function ($scope, Notification) {
             $scope.success = function () {
                 Notification.success('Success notification');
@@ -30,12 +30,12 @@ angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap
 //Department Route 
                     .state('home.departments', {
                         url: '/departments',
-                        templateUrl: 'partials/department/departments.html',
+                        templateUrl: 'partials/department/addDepartment.html',
                         controller: 'GetAllDepartmentCtrl'
                     })
                     .state('home.addDepartment', {
                         url: '/departments/:id',
-                        templateUrl: 'partials/department/addDepartment.html'
+                        templateUrl: 'partials/department/departments.html'
                     })
                     .state('home.departmentModalWindow', {
                         url: '/departmentmodalWindow',
@@ -51,7 +51,13 @@ angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap
                         url: '/modules/:id',
                         templateUrl: 'partials/module/editModule.html'
 
-                    });
+                    })
+                    .state('home.testPage', {
+                        url: '/test',
+                        templateUrl: 'partials/about.html',
+                        controller: 'checkUser'
+                    })
+                    ;
             $urlRouterProvider.otherwise('/');
 
             $resourceProvider.defaults.actions = {

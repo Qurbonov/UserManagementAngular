@@ -1,1 +1,18 @@
-<div>About</div>
+<div class="container">
+    <form class="form-horizontal" ng-submit="checkUserFunction()" autocomplete="off">
+        <div class="form-group">
+            <label for="name" class="control-label">Name: </label>
+            <input type="text" id="name" class="form-control" ng-model="t.username"/>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label">Password: </label>
+            <input type="text" id="name" class="form-control" ng-model="t.password"/>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-info" value="Check"/>
+        </div>
+    </form>
+    <div>{{userHash}} = {{hash}} <br>
+        {{resultMsg}}</div>
+
+</div>
