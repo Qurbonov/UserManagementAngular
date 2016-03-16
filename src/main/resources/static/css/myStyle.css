@@ -8,6 +8,10 @@ html {
 .login{
     margin-top: 200px;
 }
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
 .table > tbody > tr > td {
      vertical-align: middle;
 }

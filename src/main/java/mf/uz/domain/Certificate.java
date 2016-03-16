@@ -14,14 +14,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author qurbonov
  */
 @Entity
-@Table(name = "certificates")
+@Table(name = "CERTIFICATES", uniqueConstraints = @UniqueConstraint(columnNames = {"CHECKSUM_MD5"}))
+@SequenceGenerator(name = "CertificateSeq", sequenceName = "SEQ_CERTIFICATES", allocationSize = 1)
 public class Certificate {
 
     @Id
@@ -30,7 +33,7 @@ public class Certificate {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "EMPLOYEE_ID")
+    @JoinColumn(name = "USER_ID")
     private Users user;
 
     @Column(name = "CONTENT")

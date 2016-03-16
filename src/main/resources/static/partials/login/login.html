@@ -1,15 +1,27 @@
 <div class="container login" ng-init="load()">
-    <form role="form" name="loginForm">
-        <div class="form-signin">
-            <h2 class="form-signin-heading">Добро пожаловать {{user.login}}</h2>
-            <div class="text-danger">{{error}}</div>
-            <label for="loginTxt">Логин :</label>
-            <input type="text" id="username" class="form-control" required ng-model="user.login" />
+    <h3 class="text-center">Вход в систему</h3>
+    <hr>
+    <div class="row">
+        <div class="col-lg-4 col-xs-6 col-centered">
+            <form role="form" name="loginForm" autocomplete="off">
+                <div class="form-signin">
+                    <div class="text-danger">{{error}}</div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" id="username" class="form-control" required ng-model="user.login" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" id="password" class="form-control" required ng-model="user.password" />
+                    </div>
+                </div>
+                <button class="btn btn-default btn-sm pull-right" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Вход</button>
+
+            </form>
         </div>
-        <div class="form-group">
-            <label for="loginPasswd">Пароль:</label>
-            <input type="password" id="password" class="form-control" required ng-model="user.password" />
-        </div>
-        <button class="btn btn-info pull-right" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Вход</button>
-    </form>
+    </div><hr> 
 </div>

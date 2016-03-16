@@ -1,5 +1,9 @@
 package mf.uz.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.*;
 import mf.uz.domain.Department;
@@ -25,7 +29,10 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import mf.uz.domain.*;
 import mf.uz.services.*;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by qurbonov on 10/9/2015.
@@ -90,9 +97,10 @@ public class RestApi {
         Collection<Department> departments = departmentService.findByParentId(null);
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
+
     @RequestMapping(value = "/api/allDepartments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Department>> getAllDepartments() {
-        Collection<Department> departments = departmentService.findAll(); 
+        Collection<Department> departments = departmentService.findAll();
         return new ResponseEntity<>(departments, HttpStatus.OK);
     }
 
@@ -180,6 +188,24 @@ public class RestApi {
     public ResponseEntity<Collection<Token>> GetUUID() {
         Collection<Token> token = tokenService.findAll();
         return new ResponseEntity<>(token, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            String filename = file.getOriginalFilename();
+            String directory = "e://";
+            String filepath = Paths.get(directory, filename).toString();
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
+
+            stream.write(file.getBytes());
+            stream.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

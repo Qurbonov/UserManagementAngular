@@ -6,28 +6,38 @@
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
             <form ng-submit="editUser()">
                 <div class="form-group">
-                    <label for="inputEmail">Имя</label>
-                    <input type="text" ng-model="user.firstname" class="form-control txtRadius" placeholder="Имя">
+                    <span class="col-xs-6">
+                        <label for="inputEmail">Имя</label>
+                        <input type="text" ng-model="user.firstname" class="form-control txtRadius col-xs-6" placeholder="Имя">
+                    </span>
+                    <span class="col-xs-6">
+                        <label for="inputEmail">Фамилия</label>
+                        <input type="text" ng-model="user.lastname" class="form-control txtRadius col-xs-6" placeholder="Фамилия">
+                    </span>
+                    <span class="col-xs-6">
+                        <label for="inputEmail">Логин</label>
+                        <input type="text" ng-model="user.name" class="form-control txtRadius" placeholder="Логин">
+                    </span>
+                    <span class="col-xs-6">
+                        <label for="inputEmail">Парол</label>
+                        <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
+                    </span>
 
-                    <label for="inputEmail">Фамилия</label>
-                    <input type="text" ng-model="user.lastname" class="form-control txtRadius" placeholder="Фамилия">
-
-                    <label for="inputEmail">Логин</label>
-                    <input type="text" ng-model="user.username" class="form-control txtRadius" placeholder="Логин">
-
-                    <label for="inputEmail">Парол</label>
-                    <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
-                    
                     <input type="hidden" ng-model="user.lp" ng-value="lp"/>
-
-                    <label for="inputEmail">Отдел</label>
-                    <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
-
-                    <label for="inputEmail">Название модуля</label>
-                    <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
-
-                    <label for="inputEmail">Тип</label>
-                    <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
+                    <span class="col-xs-12">
+                        <label for="inputEmail">Отдел</label>
+                        <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
+                    </span>
+                    <span class="col-xs-6">
+                        <label for="inputEmail">Название модуля</label>
+                        <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
+                    </span>
+                    <span class="pull-right col-xs-6">
+                        <label for="inputEmail">Тип</label>
+                        <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
+                    </span>
+                        <label for="uploadCeritficate">Сертификат</label>
+                        <input type="file" ng-model="user.certificate">
                 </div>
                 <form-element entity="user"></form-element>
             </form>

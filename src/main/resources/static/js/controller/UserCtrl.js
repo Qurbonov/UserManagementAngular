@@ -25,13 +25,12 @@ angular.module("umApp").controller("userEditCtrl", function ($scope, $state, $st
         $scope.modules = restModuleApiService.query();
         $scope.roles = restRoleApiService.query();
 
-//    $state.go('home.editUser', {id: 100});
-
         $scope.editUser = function ()
             {
                 if (id === 'new')
                     {
-                        $scope.lp = $scope.user.username + $scope.user.password;
+                        console.log($scope.user.name, $scope.user.password);
+                        $scope.lp = $scope.user.name + $scope.user.password;
                         $scope.user.hash = CryptoJS.MD5($scope.lp).toString();
                         $scope.user.$create();
                         $state.go('home.users');
@@ -43,15 +42,13 @@ angular.module("umApp").controller("userEditCtrl", function ($scope, $state, $st
             };
     });
 
-angular.module("umApp").controller("checkUser", function ($scope, $stateParams, restUserApiService)
+angular.module("umApp").controller("checkUser", function ($scope, restUserApiService, Upload, $timeout)
     {
         $scope.checkUserFunction = function ()
             {
-                console.log($stateParams);
                 $scope.m = $scope.t.username + $scope.t.password;
                 $scope.userHash = CryptoJS.MD5($scope.m).toString();
-
-                restUserApiService.get({id: 50}, function (response)
+                restUserApiService.get({id: 73}, function (response)
                     {
                         $scope.hash = response.hash;
                         if ($scope.userHash === $scope.hash)
@@ -60,11 +57,39 @@ angular.module("umApp").controller("checkUser", function ($scope, $stateParams, 
                                 $scope.resultMsg = "hash is true";
                             } else
                             {
+                                console.log("hash in DB " + $scope.hash);
+                                console.log("hash " + $scope.userHash);
                                 console.log("error");
+                                $scope.resultMsg = "hash is false";
                             }
-
                     });
-
             };
+
+
+        $scope.uploadPic = function (file)
+            {
+                file.upload = Upload.upload({
+                    url: '/uploadFile',
+//                    data: {name: "user", file: file},
+                    data: {file: file},
+                });
+
+                file.upload.then(function (response)
+                    {
+                        $timeout(function ()
+                            {
+                                file.result = response.data;
+
+                            });
+                    }, function (response)
+                    {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }, function (evt)
+                    {
+                        // Math.min is to fix IE which reports 200% sometimes
+                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                    });
+            }
     });
     
