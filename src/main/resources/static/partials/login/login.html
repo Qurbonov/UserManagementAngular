@@ -1,27 +1,27 @@
 <div class="container login" ng-init="load()">
-    <h3 class="text-center">Вход в систему</h3>
     <hr>
     <div class="row">
         <div class="col-lg-4 col-xs-6 col-centered">
+            <h3 class="text-left text-success">Вход в систему</h3>
             <form role="form" name="loginForm" autocomplete="off">
                 <div class="form-signin">
                     <div class="text-danger">{{error}}</div>
                     <div class="form-group">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input type="text" id="username" class="form-control" required ng-model="user.login" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input type="password" id="password" class="form-control" required ng-model="user.password" />
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     </div>
                 </div>
-                <button class="btn btn-default btn-sm pull-right" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Вход</button>
-
+                <button class="btn btn-success btn-sm pull-right" type="submit" ng-click="login(user)" ng-disabled="loginForm.$invalid">Вход</button>
             </form>
         </div>
-    </div><hr> 
+    </div>
+    <hr> 
 </div>

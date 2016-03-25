@@ -25,14 +25,12 @@ import mf.uz.services.RoleService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import mf.uz.domain.*;
 import mf.uz.services.*;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import uz.intsoft.UZDSTCertificate;
 
 /**
  * Created by qurbonov on 10/9/2015.
@@ -50,6 +48,9 @@ public class RestApi {
     RoleService roleService;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    CertificateService certificateService;
+    
 
     @RequestMapping("/api/auth")
     public Object auth(Principal principal) {
@@ -194,6 +195,14 @@ public class RestApi {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
+            System.out.println(file.getBytes()); 
+//            Certificate certificate = null;
+//            certificate.getContent(file.getBytes());
+//            
+//            UZDSTCertificate userCertificate = new UZDSTCertificate(file.getBytes());
+////            System.out.println(userCertificate);
+//            certificateService.save(userCertificate);
+//            
             String filename = file.getOriginalFilename();
             String directory = "e://";
             String filepath = Paths.get(directory, filename).toString();

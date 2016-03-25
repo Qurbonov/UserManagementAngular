@@ -3,6 +3,7 @@
         "form-element": {},
         "tree-grid": {},
         "tree-dnd": {},
+        "fieldset": {},
         "treecontrol": {}
     },
     "attributes": {

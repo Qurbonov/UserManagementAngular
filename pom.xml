@@ -53,6 +53,11 @@
             <version>1.16.6</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>uz.intsoft</groupId>
+            <artifactId>uzdst</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 	
     <build>

@@ -1,46 +1,61 @@
 <div class="container" ng-controller="userEditCtrl">
     <div class="panel panel-success">
-        <div class="panel panel-heading"> {{ user.id ? 'Изменить пользователя' : 'Добавить пользователя' }} </div>
+        <div class="panel panel-heading">
+            {{ user.id ? 'Изменить а' : 'Добавить пользователя' }} 
+        </div>
         <div class="panel panel-body">
-
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
             <form ng-submit="editUser()">
-                <div class="form-group">
-                    <span class="col-xs-6">
+                <div class="row">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Имя</label>
                         <input type="text" ng-model="user.firstname" class="form-control txtRadius col-xs-6" placeholder="Имя">
                     </span>
-                    <span class="col-xs-6">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Фамилия</label>
                         <input type="text" ng-model="user.lastname" class="form-control txtRadius col-xs-6" placeholder="Фамилия">
                     </span>
-                    <span class="col-xs-6">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Логин</label>
-                        <input type="text" ng-model="user.name" class="form-control txtRadius" placeholder="Логин">
+                        <input type="text" ng-model="user.username" class="form-control txtRadius" placeholder="Логин">
                     </span>
-                    <span class="col-xs-6">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Парол</label>
                         <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
                     </span>
 
                     <input type="hidden" ng-model="user.lp" ng-value="lp"/>
-                    <span class="col-xs-12">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Отдел</label>
                         <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
                     </span>
-                    <span class="col-xs-6">
+                    <span class="col-xs-6 form-group">
                         <label for="inputEmail">Название модуля</label>
                         <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
                     </span>
+                    <!--                                
                     <span class="pull-right col-xs-6">
                         <label for="inputEmail">Тип</label>
                         <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
+                    </span>-->
+                    <span class="col-xs-12 form-group">
+                        <label for="uploadCeritficate">Сертификат</label><br>
+                        <div class="col-xs-3">
+                            <!--<input type="file" ng-model="user.certificate">-->
+                            <input type="file" ngf-select ng-model="picFile" name="uploadfile" accept=".cer" required ngf-model-invalid="errorFile">
+                        </div>
+                        <!--ng-disabled="!myForm.$valid"--> 
+                        <span class="progress" ng-show="picFile.progress >= 0">
+                            <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '% ' + ' отправлен !!!'"></div>
+                        </span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+
                     </span>
-                        <label for="uploadCeritficate">Сертификат</label>
-                        <input type="file" ng-model="user.certificate">
                 </div>
-                <form-element entity="user"></form-element>
+                <!--<button ng-click="uploadPic(picFile)" class="pull-right">Отправить</button>-->
+                <form-element on-click="uploadPic(picFile)" entity="user" class="pull-right"></form-element>
             </form>
+
         </div>
     </div>
 </div> 
