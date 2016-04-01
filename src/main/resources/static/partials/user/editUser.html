@@ -1,59 +1,78 @@
 <div class="container" ng-controller="userEditCtrl">
     <div class="panel panel-success">
         <div class="panel panel-heading">
-            {{ user.id ? 'Изменить а' : 'Добавить пользователя' }} 
+            {{ user.id ? 'Изменить' : 'Добавить пользователя' }} 
         </div>
         <div class="panel panel-body">
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
             <form ng-submit="editUser()">
                 <div class="row">
+                    <span class="col-xs-12 form-group">
+                        <div class="pull-left">
+                            <label>Статус</label> <br>
+                            <input type="checkbox" ng-model="user.status"
+                                   ng-true-value="true" ng-false-value="false" required>
+                            <span ng-if="user.status">Активен</span>
+                            <span ng-if="!user.status">Неактивен</span>
+                            <br/>
+                        </div>
+                    </span>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Имя</label>
+                        <label>Имя</label>
                         <input type="text" ng-model="user.firstname" class="form-control txtRadius col-xs-6" placeholder="Имя">
                     </span>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Фамилия</label>
+                        <label>Фамилия</label>
                         <input type="text" ng-model="user.lastname" class="form-control txtRadius col-xs-6" placeholder="Фамилия">
                     </span>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Логин</label>
+                        <label>Логин</label>
                         <input type="text" ng-model="user.username" class="form-control txtRadius" placeholder="Логин">
                     </span>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Парол</label>
+                        <label>Парол</label>
                         <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
                     </span>
-
                     <input type="hidden" ng-model="user.lp" ng-value="lp"/>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Отдел</label>
+                        <label>Отдел</label>
                         <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
                     </span>
                     <span class="col-xs-6 form-group">
-                        <label for="inputEmail">Название модуля</label>
+                        <label>Название модуля</label>
                         <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
                     </span>
-                    <!--                                
-                    <span class="pull-right col-xs-6">
-                        <label for="inputEmail">Тип</label>
-                        <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
-                    </span>-->
                     <span class="col-xs-12 form-group">
-                        <label for="uploadCeritficate">Сертификат</label><br>
-                        <div class="col-xs-3">
-                            <!--<input type="file" ng-model="user.certificate">-->
-                            <input type="file" ngf-select ng-model="picFile" name="uploadfile" accept=".cer" required ngf-model-invalid="errorFile">
+                        <label>Сертификат</label><br>
+                        <div class="col-xs-6 form-group" ng-if="user.id">
+                            <span class="text-info">Список сертификатов</span> <br>
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>Название</th>
+                                    <th>ОТ</th>
+                                    <th>ДО</th>
+                                </tr>
+                                <tr ng-repeat="c in certificates| orderBy: '-dateFrom'">
+                                    <td>{{c.certFileName}}</td>
+                                    <td>{{c.dateTo| date:"MM/dd/yyyy"}}</td>
+                                    <td>{{c.dateFrom| date:"MM/dd/yyyy"}}</td>
+                                </tr>
+                            </table>
                         </div>
-                        <!--ng-disabled="!myForm.$valid"--> 
-                        <span class="progress" ng-show="picFile.progress >= 0">
-                            <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '% ' + ' отправлен !!!'"></div>
-                        </span>
-                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                        <span class="col-xs-6 form-group">
+                            <button class="file-upload btn btn-info btn-sm">            
+                                <input type="file" class="file-input" ngf-select ng-model="certFile" name="uploadfile" accept=".cer" ngf-model-invalid="errorFile">
+                                Добавить сертификат 
+                            </button>
+                            <span class="progress text-success" ng-show="certFile.progress >= 0">
+                                <div style="width:{{certFile.progress}}%" ng-bind="' Отправлен '"></div>
+                            </span>
 
+                            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                        </span>
                     </span>
                 </div>
-                <!--<button ng-click="uploadPic(picFile)" class="pull-right">Отправить</button>-->
-                <form-element on-click="uploadPic(picFile)" entity="user" class="pull-right"></form-element>
+                <form-element entity="user" class="pull-right"></form-element>
             </form>
 
         </div>

@@ -1,36 +1,52 @@
-<div class="container" ng-controller="addUserCtrl">
-    <div class="panel panel-danger">
-        <div class="panel panel-heading">Добавить пользователя</div>
+<div class="container"> 
+    <div class="panel panel-success">
+        <div class="panel panel-heading">
+            {{ 'Добавить пользователя add'}} 
+        </div> 
         <div class="panel panel-body">
             <div ng-repeat="message in messages" ng-class="message.type">{{message.text}}</div>
-            <form  ng-submit="sendPost()">
-                <div class="form-group">
-                    <label for="inputEmail">Имя</label>
-                    <input type="text" ng-model="user.firstname" class="form-control txtRadius" placeholder="Имя">
+            <form ng-submit="editUser()">
+                <div class="row">
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Имя</label>
+                        <input type="text" ng-model="user.firstname" class="form-control txtRadius col-xs-6" placeholder="Имя">
+                    </span>
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Фамилия</label>
+                        <input type="text" ng-model="user.lastname" class="form-control txtRadius col-xs-6" placeholder="Фамилия">
+                    </span>
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Логин</label>
+                        <input type="text" ng-model="user.username" class="form-control txtRadius" placeholder="Логин">
+                    </span>
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Парол</label>
+                        <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
+                    </span>
 
-                    <label for="inputEmail">Фамилия</label>
-                    <input type="text" ng-model="user.lastname" class="form-control txtRadius" placeholder="Фамилия">
-
-                    <label for="inputEmail">Логин</label>
-                    <input type="text" ng-model="user.username" class="form-control txtRadius" placeholder="Логин">
-
-                    <label for="inputEmail">Парол</label>
-                    <input type="password" ng-model="user.password" class="form-control txtRadius" placeholder="Парол">
-                    
-                    <label for="inputEmail">Отдел</label>
-                    <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
-
-                    <label for="inputEmail">Название модуля</label>
-                    <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
-
-                    <label for="inputEmail">Типss</label>
-                    <select multiple="" ng-model="user.roles" ng-options="x.roleName for x in roles" class="form-control txtRadius"></select>
-                
-                
+                    <input type="hidden" ng-model="user.lp" ng-value="lp"/>
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Отдел</label>
+                        <select multiple="" ng-model="user.department" ng-options="x.departmentName for x in departments" class="form-control txtRadius"></select>
+                    </span>
+                    <span class="col-xs-6 form-group">
+                        <label for="inputEmail">Название модуля</label>
+                        <select multiple=""  ng-model="user.modules" ng-options="x.moduleName for x in modules" class="form-control txtRadius"></select>
+                    </span>
+                    <span class="col-xs-12 form-group">
+                        <label for="uploadCeritficate">Сертификат</label><br>
+                        <div class="col-xs-3">
+                            <input type="file" ngf-select ng-model="picFile" name="uploadfile" accept=".cer" required ngf-model-invalid="errorFile">
+                        </div>
+                        <span class="progress" ng-show="picFile.progress >= 0">
+                            <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '% ' + ' отправлен !!!'"></div>
+                        </span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </span>
                 </div>
-
-                <button type="submit" class="btn btn-primary pull-right"> <span class="fa fa-user-plus "></span> Добавить</button>
+                <form-element entity="user" class="pull-right"></form-element>
             </form>
+
         </div>
     </div>
 </div> 

@@ -2,9 +2,9 @@ package mf.uz.services;
 
 import mf.uz.controller.Credentials;
 import mf.uz.domain.Users;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import mf.uz.domain.Certificate;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
@@ -26,4 +26,6 @@ public interface UsersService {
     Users findUsers(Credentials credentials);
 
     public UserDetails findUserInfoByUsername(String username);
+    
+    public Certificate addCertificate(Long userId, Certificate certificate);
 }

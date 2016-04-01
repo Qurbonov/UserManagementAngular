@@ -14,6 +14,9 @@
         "treecontrol": {},
         "class": {},
         "entity": {},
+        "custom-popover": {
+            "context": "span"
+        },
         "ui-sref": {}
     }
 }

@@ -19,8 +19,15 @@ angular.module("umApp")
                 }
             }
         })
-        .controller('treeCtrl', function ($scope, $uibModal, restDepartmentApiService) {
+        .controller('treeCtrl', function ($scope, $uibModal, restDepartmentApiService, restUserApiService) {
+            $scope.removeUser = function (index) {
+                restUserApiService.remove({id: $scope.names[index].id},
+                        function () {
+                            $scope.names.splice(index, 1);
+                        });
+            };
             $scope.departments = restDepartmentApiService.query();
+
             $scope.departmentTreeOptions = {
                 isLeaf: function (department) {
                     return !department.hasChildren;
@@ -30,9 +37,10 @@ angular.module("umApp")
 
             $scope.removeDepartment = function (department) {
                 restDepartmentApiService.remove({id: department.id});
-                
+
                 function findRecursive(list, id) {
-                    for (var i = 0; i < list.length; i++) {
+                    for (var i = 0; i < list.length; i++)
+                    {
                         var item = list[i];
                         if (item.id === id) {
                             return item;
@@ -56,13 +64,26 @@ angular.module("umApp")
                     });
                 }
             };
+            $scope.names = restUserApiService.query().then(
+                    function () {
+
+                    });
+
             $scope.showSelected = function (department) {
+                $scope.user = restUserApiService.query();
+                console.log($scope.user.firstname);
+
+
+
+
+                console.log(department.id);
                 if (department.hasChildren && !department.loaded) {
                     department.loaded = true;
                     department.children = restDepartmentApiService.children({id: department.id}, function () {
                         $scope.expandedDepartments.push(department);
                     });
                 }
+
             };
             $scope.open = function () {
                 $uibModal.open({

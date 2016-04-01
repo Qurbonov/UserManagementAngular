@@ -1,120 +1,64 @@
-angular.module("umApp").controller('usersController', function ($scope, restUserApiService)
-    {
-        $scope.names = restUserApiService.query();
-        $scope.removeUser = function (index)
-            {
-                restUserApiService.remove({id: $scope.names[index].id}, function ()
-                    {
-                        $scope.names.splice(index, 1);
-                    });
-            };
-    });
+angular.module("umApp")
 
-angular.module("umApp").controller("userEditCtrl", function ($scope, $state, $stateParams, restUserApiService, restDepartmentApiService, restModuleApiService, restRoleApiService, Upload, $timeout)
-    {
-        var id = $stateParams.id;
-        if (id === 'new')
-            {
-                $scope.user = new restUserApiService();
-            } else
-            {
-                $scope.user = restUserApiService.get({id: id});
-            }
-        $scope.departments = restDepartmentApiService.query();
-        $scope.modules = restModuleApiService.query();
-        $scope.roles = restRoleApiService.query();
-
-        $scope.editUser = function ()
-            {
-                if (id === 'new')
-                    {
-                        console.log($scope.user.username, $scope.user.password);
-                        $scope.lp = $scope.user.username + $scope.user.password;
-                        $scope.user.hash = CryptoJS.MD5($scope.lp).toString();
-                        $scope.user.$create();
-                        $state.go('home.users');
-                    } else
-                    {
-                        $scope.user.$update();
-                        $state.go('home.users');
+        .controller("userEditCtrl",
+                function ($scope, $stateParams, restUserApiService, restAllDepartmentApiService, restModuleApiService, restRoleApiService, Upload, $timeout) {
+                    var id = $stateParams.id;
+                    if (id === 'new') {
+                        $scope.user = new restUserApiService();
                     }
-            };
-        $scope.uploadPic = function (file)
-            {
-                console.log("clicket");
-                file.upload = Upload.upload({
-                    url: '/uploadFile',
-//                    data: {name: "user", file: file},
-                    data: {file: file},
-                });
+                    else {
+                        $scope.user = restUserApiService.get({id: id});
+                        $scope.certificates = restUserApiService.certificates({
+                            id: id});
+                    }
+                    $scope.departments = restAllDepartmentApiService.query();
+                    $scope.modules = restModuleApiService.query();
+                    $scope.roles = restRoleApiService.query();
 
-                file.upload.then(function (response)
-                    {
-                        $timeout(function ()
-                            {
-                                file.result = response.data;
 
+                    $scope.editUser = function () {
+                        if (id === 'new') {
+                            $scope.user.$create(function (response) {
+                                $scope.uploadCertificate($scope.certFile, response.id, function () {
+//                                    $state.go('home.users');
+                                });
+                            }, function () {
+                                console.log("error massage")
                             });
-                    }, function (response)
-                    {
-                        if (response.status > 0)
-                            $scope.errorMsg = response.status + ': ' + response.data;
-                    }, function (evt)
-                    {
-                        // Math.min is to fix IE which reports 200% sometimes
-                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                    });
-            }
-    });
-
-angular.module("umApp").controller("checkUser", function ($scope, restUserApiService, Upload, $timeout)
-    {
-        $scope.checkUserFunction = function ()
-            {
-                $scope.m = $scope.t.username + $scope.t.password;
-                $scope.userHash = CryptoJS.MD5($scope.m).toString();
-                restUserApiService.get({id: 161}, function (response)
-                    {
-                        $scope.hash = response.hash;
-                        if ($scope.userHash === $scope.hash)
-                            {
-                                console.log("fer");
-                                $scope.resultMsg = "hash is true";
-                            } else
-                            {
-                                console.log("hash in DB " + $scope.hash);
-                                console.log("hash " + $scope.userHash);
-                                console.log("error");
-                                $scope.resultMsg = "hash is false";
+                        }
+                        else {
+                            $scope.user.$update(function (response) {
+                                $scope.uploadCertificate($scope.certFile, response.id, function () {
+//                                    $state.go('home.users');
+                                });
+                                window.location.reload(true);
                             }
-                    });
-            };
-
-
-        $scope.uploadPic1 = function (file)
-            {
-                file.upload = Upload.upload({
-                    url: '/uploadFile',
-//                    data: {name: "user", file: file},
-                    data: {file: file},
-                });
-
-                file.upload.then(function (response)
-                    {
-                        $timeout(function ()
-                            {
+                            )
+                        }
+                    };
+                    $scope.uploadCertificate = function (file, userId, callback) {
+                        if (file === undefined) {
+                            return null;
+                        }
+                        file.upload = Upload.upload({
+                            url: '/uploadFile',
+                            data: {
+                                file: file,
+                                userId: userId
+                            }
+                        });
+                        file.upload.then(function (response) {
+                            $scope.certificates = restUserApiService.certificates({
+                                id: id});
+                            $timeout(function () {
                                 file.result = response.data;
-
                             });
-                    }, function (response)
-                    {
-                        if (response.status > 0)
-                            $scope.errorMsg = response.status + ': ' + response.data;
-                    }, function (evt)
-                    {
-                        // Math.min is to fix IE which reports 200% sometimes
-                        file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                    });
-            }
-    });
-    
+                        }, function (response) {
+                            if (response.status > 0)
+                                $scope.errorMsg = response.status + ': ' + response.data;
+                        }, function (evt) {
+                            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                        });
+                        callback();
+                    }
+                }); 

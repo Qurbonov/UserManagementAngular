@@ -5,7 +5,9 @@
  */
 package mf.uz.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,11 +34,12 @@ public class Certificate {
     @Column(name = "C_ID", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "USER_ID")
     private Users user;
-
-    @Column(name = "CONTENT")
+ 
+    @Column(name = "CONTENT") 
     private byte[] content;
 
     @Column(name = "CHECKSUM_MD5")
@@ -48,17 +51,23 @@ public class Certificate {
     @Column(name = "dateFrom")
     private Date dateFrom;
 
+    @Column(name = "certFileName")
+    private String certFileName;
+    
     public Certificate() {
     }
 
-    public Certificate(Long id, Users user, byte[] content, String checksumMd5, Date dateTo, Date dateFrom) {
+    public Certificate(Long id, Users user, byte[] content, String checksumMd5, Date dateTo, Date dateFrom, String certFileName) {
         this.id = id;
         this.user = user;
         this.content = content;
         this.checksumMd5 = checksumMd5;
         this.dateTo = dateTo;
         this.dateFrom = dateFrom;
+        this.certFileName = certFileName;
     }
+
+    
 
     public Long getId() {
         return id;
@@ -106,5 +115,17 @@ public class Certificate {
 
     public void setDateFrom(Date dateFrom) {
         this.dateFrom = dateFrom;
+    }
+
+    public String getCertFileName() {
+        return certFileName;
+    }
+
+    public void setCertFileName(String certFileName) {
+        this.certFileName = certFileName;
+    }
+    
+    public Long getUserId() {
+        return user == null ? null : user.getId();
     }
 }

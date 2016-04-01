@@ -24,7 +24,7 @@ angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap
                         .state('home.users', {
                             url: '/users',
                             templateUrl: 'partials/user/users.html',
-                            controller: 'usersController'
+                            controller: 'treeCtrl'
                         })
                         .state('home.editUser', {
                             url: '/users/:id',
@@ -34,7 +34,8 @@ angular.module('umApp', ['ngResource', 'ui.router', 'treeControl', 'ui.bootstrap
                         .state('home.departments', {
                             url: '/departments',
                             templateUrl: 'partials/department/addDepartment.html',
-                            controller: 'GetAllDepartmentCtrl'
+                            controller: 'treeCtrl'
+//                            controller: 'GetAllDepartmentCtrl'
                         })
                         .state('home.addDepartment', {
                             url: '/departments/:id',

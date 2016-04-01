@@ -1,29 +1,40 @@
-<div class="container">
-    <a ui-sref="home.editUser({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px">
-        <i class="fa fa-plus fa-1x"></i> Добавить</a>    
-    <table border="0" class="table table-bordered table-hover">
-        <tr>
-            <th class="text-center">Логин</th>
-            <th class="text-center">Имя</th>
-            <th class="text-center">Фамилия</th>
-            <th class="text-center">Отдел</th>
-            <th class="col-md-1 text-center">Модул</th>
-            <!--<th class="text-center">Тип</th>-->
-            <th class="text-center">Изменение</th>
-        </tr>
-        <tr ng-repeat="x in names">
-            <td>{{x.username}}</td>
-            <td>{{x.firstname}}</td>
-            <td>{{x.lastname}}</td>
-            <td>{{x.department[0].departmentName}}</td>
-            <td>{{x.modules[0].moduleName}}</td>
-            <!--<td>{{x.roles[0].roleName}}</td>-->
-            <td class="col-md-2 text-center">
-                <span>
-                    <a ui-sref="home.editUser({id: x.id})" class="btn btn-default btn-sm"><i class="fa fa-pencil-square-o fa-1x"></i></a>
-                    <a ng-click="removeUser($index)" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-1x"></i></a>
-                </span>
-            </td>
-        </tr>
-    </table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <a ui-sref="home.editUser({id: 'new'})" class="btn btn-success btn-sm pull-right" style="margin-bottom: 20px">
+                <i class="fa fa-plus fa-1x"></i> Добавить</a> 
+        </div>
+
+        <div class="col-lg-4">
+            <treecontrol class="tree-classic" tree-model="departments" options="departmentTreeOptions" 
+                         expanded-nodes="expandedDepartments" on-selection="showSelected(node)">
+                {{node.departmentName}}
+                <!--<span custom-popover department-id="node.id" on-edit="editDept(node)" on-remove="removeDepartment(node)"></span>-->
+            </treecontrol>
+        </div>
+        <div class="col-lg-8">
+
+            <table class="table table-bordered table-hover">
+                <tr class="text-center">
+                    <td>Логин</td>
+                    <td>Имя</td>
+                    <td>Фамилия</td>
+                    <td>Отдел</td>
+                    <td>Модул</td>
+                    <td>Изменение</td>
+                </tr>
+                <tr ng-repeat="x in names">
+                    <td>{{x.username}}</td>
+                    <td>{{x.firstname}}</td>
+                    <td>{{x.lastname}}</td>
+                    <td>{{x.department[0].departmentName}}</td>
+                    <td>{{x.modules[0].moduleName}}</td>
+                    <td class="col-md-2 text-center">
+                        <a ui-sref="home.editUser({id: x.id})" class="btn btn-default btn-sm"><i class="fa fa-pencil-square-o fa-1x"></i></a>
+                        <a ng-click="removeUser($index)" class="btn btn-danger btn-sm"><i class="fa fa-trash-o fa-1x"></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>

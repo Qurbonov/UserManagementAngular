@@ -1,16 +1,24 @@
-<div ng-controller="treeCtrl">
-    <div class="container treeCtrl">
-        <div class="panel panel-default">
-            <div class="panel panel-heading">&nbsp;<a ng-click="open()" class="addDeptLink">Добавить отдела</a> </div>
-            <div class="panel panel-body">
-                <div>
-                    <treecontrol class="tree-light" tree-model="departments" options="departmentTreeOptions" 
-                                 expanded-nodes="expandedDepartments" on-selection="showSelected(node)">
-                        {{node.departmentName}}
-                        <span custom-popover department-id="node.id" on-edit="editDept(node)" on-remove="removeDepartment(node)"></span>
-                    </treecontrol>
-                </div>
-            </div>
+<div class="container treeCtrl">
+    <div class="panel panel-default">
+        <div class="panel panel-heading">
+            <a ng-click="open()" class="addDeptLink">Добавить отдела</a>
         </div>
-        <!--<tree-grid expand-level="2" expand-on="expanding_property" tree-control="my_tree" tree-data="tree_data" on-select="showSelected(branch)" col-defs="col_defs"></tree-grid>-->
+        <div class="panel panel-body">
+
+            <div>
+                
+                <treecontrol class="tree-classic" tree-model="departments" options="departmentTreeOptions" 
+                             expanded-nodes="expandedDepartments" on-selection="showSelected(node)">
+                    {{node.departmentName}}
+                    <span custom-popover department-id="node.id" on-edit="editDept(node)" on-remove="removeDepartment(node)"></span>
+                </treecontrol>
+            </div>
+
+        </div> 
+    </div>
+</div>
+
+
+
+<!--<tree-grid expand-level="2" expand-on="expanding_property" tree-control="my_tree" tree-data="tree_data" on-select="showSelected(branch)" col-defs="col_defs"></tree-grid>-->
 

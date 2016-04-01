@@ -50,7 +50,6 @@ public class RestApi {
     TokenService tokenService;
     @Autowired
     CertificateService certificateService;
-    
 
     @RequestMapping("/api/auth")
     public Object auth(Principal principal) {
@@ -65,8 +64,14 @@ public class RestApi {
         Collection<Users> userses = usersService.findAll();
         return new ResponseEntity<>(userses, HttpStatus.OK);
     }
-//  Find one user
 
+    @RequestMapping(value = "/api/certificates", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Certificate>> getCertificates() {
+        Collection<Certificate> certs = certificateService.findAll();
+        return new ResponseEntity<>(certs, HttpStatus.OK);
+    }
+
+//  Find one user
     @RequestMapping(value = "/api/users/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Users> getUser(@PathVariable Long id) {
         return new ResponseEntity<>(usersService.findOne(id), HttpStatus.OK);
@@ -92,11 +97,26 @@ public class RestApi {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/api/users/{userId}/certificates", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Certificate>> getUserCertificates(@PathVariable Long userId) {
+        Collection<Certificate> certs = certificateService.findByUserId(userId);
+        return new ResponseEntity<>(certs, HttpStatus.OK);
+    }
+
 //  Find all departments
     @RequestMapping(value = "/api/departments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Department>> getDepartments() {
         Collection<Department> departments = departmentService.findByParentId(null);
         return new ResponseEntity<>(departments, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/departments/{depertmentId}/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<Users>> getUserDepartments(@PathVariable Long userId) {
+        
+        
+        
+//        Collection<Certificate> certs = departmentService.findByUserId(userId);
+        return new ResponseEntity<>(certs, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/allDepartments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -193,26 +213,25 @@ public class RestApi {
 
     @ResponseBody
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam Long userId) {
         try {
-            System.out.println(file.getBytes()); 
-//            Certificate certificate = null;
-//            certificate.getContent(file.getBytes());
-//            
-//            UZDSTCertificate userCertificate = new UZDSTCertificate(file.getBytes());
-////            System.out.println(userCertificate);
-//            certificateService.save(userCertificate);
-//            
+            Certificate certificate = new Certificate();
+            UZDSTCertificate tCertificate = new UZDSTCertificate(file.getBytes());
+            certificate.setContent(tCertificate.getSignature());
+            certificate.setDateFrom(tCertificate.getNotAfter());
+            certificate.setDateTo(tCertificate.getNotBefore());
+            certificate.setCertFileName(file.getOriginalFilename());
+            certificate.setId(Long.MIN_VALUE);
+            usersService.addCertificate(userId, certificate);
             String filename = file.getOriginalFilename();
             String directory = "e://";
             String filepath = Paths.get(directory, filename).toString();
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(filepath)));
-
             stream.write(file.getBytes());
             stream.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

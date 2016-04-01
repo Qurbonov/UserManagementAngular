@@ -24,9 +24,9 @@ public class Users implements Serializable, UserDetails, Principal {
 
     @Column(name = "lastname")
     private String lastname;
-    
-    @Column(name = "hash")
-    private String hash;
+
+    @Column(name = "status")
+    private Boolean status;
 
     @ManyToMany
     private List<Department> department;
@@ -49,13 +49,13 @@ public class Users implements Serializable, UserDetails, Principal {
     public Users() {
     }
 
-    public Users(Long id, String username, String password, String firstname, String lastname, String hash, List<Department> department, List<Module> modules, List<Role> roles, List<Permission> permissions) {
+    public Users(Long id, String username, String password, String firstname, String lastname, Boolean status, List<Department> department, List<Module> modules, List<Role> roles, List<Permission> permissions) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.hash = hash;
+        this.status = status;
         this.department = department;
         this.modules = modules;
         this.roles = roles;
@@ -64,11 +64,9 @@ public class Users implements Serializable, UserDetails, Principal {
 
     @Override
     public String toString() {
-        return "Users{" + "id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", hash=" + hash + ", department=" + department + ", modules=" + modules + ", roles=" + roles + ", permissions=" + permissions + '}';
+        return "Users{" + "id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", status=" + status + ", department=" + department + ", modules=" + modules + ", roles=" + roles + ", permissions=" + permissions + '}';
     }
 
-    
-    
     public Long getId() {
         return id;
     }
@@ -141,13 +139,12 @@ public class Users implements Serializable, UserDetails, Principal {
         this.permissions = permissions;
     }
 
-    public String getHash() {
-        return hash;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
-    
 
 }

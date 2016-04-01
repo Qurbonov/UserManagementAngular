@@ -8,15 +8,12 @@ angular.module("umApp").controller('GetAllDepartmentCtrl', function ($scope, res
 });
 
 angular.module("umApp").controller("AddEditDepartmentCtrl",
-        function ($scope, restAllDepartmentApiService, $uibModalInstance, $state, $stateParams, restDepartmentApiService, departmentId) {
-//            $uibModalInstance.close(departmentId);
+        function ($scope, restAllDepartmentApiService, $uibModalInstance, restDepartmentApiService, departmentId) {
             var id = departmentId;
             if (id === 0) {
                 $scope.department = new restDepartmentApiService();
-                console.log("createww");
             } else {
                 $scope.department = restDepartmentApiService.get({id: departmentId});
-                console.log("update");
             }
             $scope.editDepartment = function () {
                 if (id === 0) {

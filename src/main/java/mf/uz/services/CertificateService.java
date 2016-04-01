@@ -1,7 +1,6 @@
 package mf.uz.services;
 
-import mf.uz.domain.Module;
-import mf.uz.repositories.ModuleRepository;
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import mf.uz.domain.Certificate;
 import mf.uz.repositories.CertificateRepository;
-import uz.intsoft.UZDSTCertificate;
+import mf.uz.spec.CertificateSpec;
 
 /**
  * Created by qurbonov on 9/2/2015.
@@ -25,6 +24,7 @@ public class CertificateService {
         return certificateRepository.findOne(id);
     }
 
+    @Transactional
     public Certificate save(Certificate certificate) {
         return certificateRepository.save(certificate);
     }
@@ -36,5 +36,9 @@ public class CertificateService {
     @Transactional
     public void delete(Long certificateID) {
         certificateRepository.delete(certificateID);
+    }
+
+    public List<Certificate> findByUserId(Long userId) {
+        return certificateRepository.findAll(CertificateSpec.byUserId(userId));
     }
 }

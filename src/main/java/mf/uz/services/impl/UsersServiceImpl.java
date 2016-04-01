@@ -13,14 +13,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import mf.uz.domain.Certificate;
+import mf.uz.repositories.CertificateRepository;
+import mf.uz.spec.UserSpec;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-
     @Autowired
-    public UserRepository userRepository;
+    private CertificateRepository certificateRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @PersistenceContext
     protected EntityManager em;
@@ -66,7 +70,7 @@ public class UsersServiceImpl implements UsersService {
 //    }
     @Override
     public Users findByName(String username) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return userRepository.findOne(UserSpec.findByUsername(username));
     }
 
     @Override
@@ -79,4 +83,11 @@ public class UsersServiceImpl implements UsersService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    @Transactional
+    public Certificate addCertificate(Long userId, Certificate certificate) {
+        Users user = findOne(userId);
+        certificate.setUser(user);
+        return certificateRepository.save(certificate);
+    }
 }

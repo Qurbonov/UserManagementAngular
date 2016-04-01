@@ -13,7 +13,7 @@ html {
     margin: 0 auto;
 }
 .table > tbody > tr > td {
-     vertical-align: middle;
+    vertical-align: middle;
 }
 .addDeptDiv{
     background-color: #dee3e5;
@@ -41,5 +41,20 @@ html {
     right: 10px;
 }
 .treeCtrl{
-  margin-top: 70px;
+    margin-top: 70px;
 }
+.file-upload {
+    position: relative;
+    overflow: hidden;
+    margin: 0px; }
+
+.file-upload input.file-input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0); }
