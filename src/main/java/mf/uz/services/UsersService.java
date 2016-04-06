@@ -11,7 +11,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  * Created by qurbonov on 9/22/2015.
  */
 public interface UsersService {
+
     List<Users> findAll();
+
+    List<Users> findByUserId(Long departmentId);
 
     Users findOne(Long id);
 
@@ -26,6 +29,6 @@ public interface UsersService {
     Users findUsers(Credentials credentials);
 
     public UserDetails findUserInfoByUsername(String username);
-    
+
     public Certificate addCertificate(Long userId, Certificate certificate);
 }

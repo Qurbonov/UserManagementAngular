@@ -111,13 +111,12 @@ public class RestApi {
     }
 
     @RequestMapping(value = "/api/departments/{depertmentId}/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Users>> getUserDepartments(@PathVariable Long userId) {
-        
-        
-        
+    public ResponseEntity<Collection<Users>> getUserDepartments(@PathVariable Long depertmentId) {
+        Collection<Users> userses = usersService.findByUserId(depertmentId);
 //        Collection<Certificate> certs = departmentService.findByUserId(userId);
-        return new ResponseEntity<>(certs, HttpStatus.OK);
-    }
+//        return new ResponseEntity<>(certs, HttpStatus.OK);
+        return new ResponseEntity<>(userses, HttpStatus.OK);
+    } 
 
     @RequestMapping(value = "/api/allDepartments", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Collection<Department>> getAllDepartments() {

@@ -11,13 +11,14 @@ angular
             });
         })
         .factory('restAllDepartmentApiService', function ($resource) {
+                        
             return $resource('/api/allDepartments/:id', {id: '@id'}, {
                 users: {
                     method: 'GET',
                     url: 'api/departments/:id/users',
                     isArray: true
                 }
-
+                
             });
         })
 

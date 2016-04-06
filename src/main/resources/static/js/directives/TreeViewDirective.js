@@ -19,7 +19,7 @@ angular.module("umApp")
                 }
             }
         })
-        .controller('treeCtrl', function ($scope, $uibModal, restDepartmentApiService, restUserApiService) {
+        .controller('treeCtrl', function ($scope, $stateParams, $uibModal, restDepartmentApiService, restAllDepartmentApiService, restUserApiService) {
             $scope.removeUser = function (index) {
                 restUserApiService.remove({id: $scope.names[index].id},
                         function () {
@@ -64,19 +64,12 @@ angular.module("umApp")
                     });
                 }
             };
-            $scope.names = restUserApiService.query().then(
-                    function () {
-
-                    });
-
+            $scope.names = restUserApiService.query();
             $scope.showSelected = function (department) {
-                $scope.user = restUserApiService.query();
-                console.log($scope.user.firstname);
+                var id = department.id;
+                console.log(id);
+                $scope.names = restAllDepartmentApiService.users({id: id});
 
-
-
-
-                console.log(department.id);
                 if (department.hasChildren && !department.loaded) {
                     department.loaded = true;
                     department.children = restDepartmentApiService.children({id: department.id}, function () {

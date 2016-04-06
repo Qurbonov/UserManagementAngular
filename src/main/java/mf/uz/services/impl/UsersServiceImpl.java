@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 public class UsersServiceImpl implements UsersService {
+
     @Autowired
     private CertificateRepository certificateRepository;
     @Autowired
@@ -71,6 +72,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users findByName(String username) {
         return userRepository.findOne(UserSpec.findByUsername(username));
+    }
+
+    public List<Users> findByUserId(Long departmentId) {
+        return userRepository.findAll(UserSpec.byDerpartmentId(departmentId));
     }
 
     @Override

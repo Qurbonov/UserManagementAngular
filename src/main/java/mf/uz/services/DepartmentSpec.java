@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
  *
  * @author Qurbonov
  */
-public class DepartmentSpec {
+public class DepartmentSpec { 
 
     public static Specification<Department> byParentId(final Long parentId) {
         return (Root<Department> root, CriteriaQuery<?> cq, CriteriaBuilder cb) -> {
@@ -30,5 +30,8 @@ public class DepartmentSpec {
             //// add to here user ID = department ID
             return null;
         };
+    }
+        public static Specification<Department> byDerpartmentId(Long departmentId) {
+        return (Root<Department> root, CriteriaQuery<?> cq, CriteriaBuilder cb) -> cb.equal(root.get(Department_.id), departmentId);
     }
 }
